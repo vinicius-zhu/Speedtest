@@ -161,11 +161,11 @@ namespace Speedtest
 
                 if (File.Exists(logfilepath))
                 {
-                    sw = new StreamWriter("log.csv", true, Encoding.UTF8);
+                    sw = new StreamWriter(logfilepath, true, Encoding.UTF8);
                 }
                 else
                 {
-                    sw = new StreamWriter("log.csv", false, Encoding.UTF8);
+                    sw = new StreamWriter(logfilepath, false, Encoding.UTF8);
                     sw.WriteLine(
                         "Timespan;Date;Time;Download;Upload;Latencia;Jitter;Perda;IP;Região Servidor;Região Teste;Operador");
                 }
@@ -193,7 +193,7 @@ namespace Speedtest
                              testdata["Região Teste"] + ";" +
                              provider
                 );
-                ss.SaveAsFile(date.Replace("-", "") + time.Replace(":", "") + ".jpg");
+                ss.SaveAsFile(Path.Combine(ControlSettings.SaveFolder,date.Replace("-", "") + time.Replace(":", "") + ".jpg"));
                 sw.Close();
                 File.SetAttributes(logfilepath, File.GetAttributes(logfilepath) | FileAttributes.Hidden);
             }

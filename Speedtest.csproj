@@ -92,7 +92,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Status.xlsm" />
-    <None Include="Status.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
