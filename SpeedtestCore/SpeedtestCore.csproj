@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="83.0.4103.3900" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="BBLTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="BBLTest.Designer.cs">
+      <DependentUpon>BBLTest.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="BBLTest.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BBLTest.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="speedometer.ico"/>
+    <EmbeddedResource Include="speedometer.png"/>
+    <EmbeddedResource Include="Status.xlsm"/>
+  </ItemGroup>
+
+</Project>
