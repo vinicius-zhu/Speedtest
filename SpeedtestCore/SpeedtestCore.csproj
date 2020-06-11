@@ -44,6 +44,9 @@
     <EmbeddedResource Include="speedometer.ico" />
     <EmbeddedResource Include="speedometer.png" />
     <EmbeddedResource Include="Status.xlsm" />
+    <EmbeddedResource Include="chromedriver.exe" />
+    <EmbeddedResource Include="Interop.IWshRuntimeLibrary.dll" />
+    <EmbeddedResource Include="WebDriver.dll" />
   </ItemGroup>
 
 </Project>

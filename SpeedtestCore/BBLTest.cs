@@ -63,9 +63,22 @@ namespace SpeedtestCore
             return array.ToArray();
         }
 
+        public void WriteAssembly(String assembly, String path)
+        {
+            if (!File.Exists(path))
+            {
+                File.WriteAllBytes(path, GetTextAssembly(assembly));
+            }
+        }
+
         public BBLTest()
         {
             InitializeComponent();
+
+            WriteAssembly("Interop.IWshRuntimeLibrary.dll", Path.Combine(Application.StartupPath, "Interop.IWshRuntimeLibrary.dll"));
+            WriteAssembly("chromedriver.exe", Path.Combine(Application.StartupPath, "chromedriver.exe"));
+            WriteAssembly("WebDriver.dll", Path.Combine(Application.StartupPath, "WebDriver.dll"));
+
             Icon = Icon.FromHandle(((Bitmap)GetImageAssembly("speedometer.png")).GetHicon());
             notifyIcon.Icon = Icon;
             SeleniumChromeService = ChromeDriverService.CreateDefaultService();
@@ -77,7 +90,7 @@ namespace SpeedtestCore
             TestTimer = new System.Windows.Forms.Timer();
             checkBoxAutoStart.Visible = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
-                EventArgs ea = new EventArgs();
+            EventArgs ea = new EventArgs();
             if (File.Exists(Path.Combine(Application.StartupPath, "settings.xml")))
             {
                 FileStream fs = new FileStream(Path.Combine(Application.StartupPath, "settings.xml"), FileMode.Open);
@@ -125,6 +138,8 @@ namespace SpeedtestCore
         private void RunSpeedtestCore()
         {
             Stopping = false;
+
+
             SeleniumChromeDriver = new ChromeDriver(SeleniumChromeService, SeleniumChromeOptions);
             for (int count = 0; count < 3; count++)
             {
@@ -188,6 +203,7 @@ namespace SpeedtestCore
                     StreamWriter sw;
                     String logfilepath = Path.Combine(ControlSettings.SaveFolder, "log.csv");
                     String excelfilepath = Path.Combine(ControlSettings.SaveFolder, "Status.xlsm");
+                    WriteAssembly("Status.xlsm", excelfilepath);
 
                     if (File.Exists(logfilepath))
                     {
@@ -200,10 +216,7 @@ namespace SpeedtestCore
                             "Timespan;Date;Time;Download;Upload;Latencia;Jitter;Perda;IP;Região Servidor;Região Teste;Operador");
                     }
 
-                    if (!File.Exists(excelfilepath))
-                    {
-                        File.WriteAllBytes(excelfilepath, GetTextAssembly("Status.xlsm"));
-                    }
+                    
 
                     DateTime today = DateTime.Parse(timestamp);
                     TimeSpan now = today.TimeOfDay;
