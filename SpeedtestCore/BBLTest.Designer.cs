@@ -36,14 +36,14 @@
             this.buttonStartDaemon = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxSavePath = new System.Windows.Forms.TextBox();
             this.labelSavePath = new System.Windows.Forms.Label();
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.checkBoxAutoTest = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoStart = new System.Windows.Forms.CheckBox();
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownInterval)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -52,9 +52,10 @@
             // 
             this.buttonRunTest.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRunTest.Location = new System.Drawing.Point(12, 167);
+            this.buttonRunTest.Location = new System.Drawing.Point(12, 209);
+            this.buttonRunTest.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonRunTest.Name = "buttonRunTest";
-            this.buttonRunTest.Size = new System.Drawing.Size(285, 23);
+            this.buttonRunTest.Size = new System.Drawing.Size(285, 29);
             this.buttonRunTest.TabIndex = 0;
             this.buttonRunTest.Text = "Run single test";
             this.buttonRunTest.UseVisualStyleBackColor = true;
@@ -64,23 +65,19 @@
             // 
             this.numericUpDownInterval.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownInterval.Location = new System.Drawing.Point(108, 18);
+            this.numericUpDownInterval.Location = new System.Drawing.Point(108, 22);
+            this.numericUpDownInterval.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.numericUpDownInterval.Name = "numericUpDownInterval";
-            this.numericUpDownInterval.Size = new System.Drawing.Size(112, 22);
+            this.numericUpDownInterval.Size = new System.Drawing.Size(112, 27);
             this.numericUpDownInterval.TabIndex = 1;
-            this.numericUpDownInterval.Value = new decimal(new int[] {
-            60,
-            0,
-            0,
-            0});
             this.numericUpDownInterval.ValueChanged += new System.EventHandler(this.numericUpDownInterval_ValueChanged);
             // 
             // labelInterval
             // 
             this.labelInterval.AutoSize = true;
-            this.labelInterval.Location = new System.Drawing.Point(12, 20);
+            this.labelInterval.Location = new System.Drawing.Point(12, 25);
             this.labelInterval.Name = "labelInterval";
-            this.labelInterval.Size = new System.Drawing.Size(54, 17);
+            this.labelInterval.Size = new System.Drawing.Size(58, 20);
             this.labelInterval.TabIndex = 2;
             this.labelInterval.Text = "Interval";
             // 
@@ -88,9 +85,9 @@
             // 
             this.labelIntervalUnit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelIntervalUnit.AutoSize = true;
-            this.labelIntervalUnit.Location = new System.Drawing.Point(226, 20);
+            this.labelIntervalUnit.Location = new System.Drawing.Point(226, 25);
             this.labelIntervalUnit.Name = "labelIntervalUnit";
-            this.labelIntervalUnit.Size = new System.Drawing.Size(57, 17);
+            this.labelIntervalUnit.Size = new System.Drawing.Size(61, 20);
             this.labelIntervalUnit.TabIndex = 3;
             this.labelIntervalUnit.Text = "minutes";
             // 
@@ -98,9 +95,10 @@
             // 
             this.buttonStartDaemon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStartDaemon.Location = new System.Drawing.Point(12, 138);
+            this.buttonStartDaemon.Location = new System.Drawing.Point(12, 172);
+            this.buttonStartDaemon.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonStartDaemon.Name = "buttonStartDaemon";
-            this.buttonStartDaemon.Size = new System.Drawing.Size(285, 23);
+            this.buttonStartDaemon.Size = new System.Drawing.Size(285, 29);
             this.buttonStartDaemon.TabIndex = 4;
             this.buttonStartDaemon.Text = "Start Daemon";
             this.buttonStartDaemon.UseVisualStyleBackColor = true;
@@ -110,9 +108,10 @@
             // 
             this.buttonStop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonStop.Location = new System.Drawing.Point(12, 196);
+            this.buttonStop.Location = new System.Drawing.Point(12, 245);
+            this.buttonStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonStop.Name = "buttonStop";
-            this.buttonStop.Size = new System.Drawing.Size(285, 23);
+            this.buttonStop.Size = new System.Drawing.Size(285, 29);
             this.buttonStop.TabIndex = 5;
             this.buttonStop.Text = "Stop";
             this.buttonStop.UseVisualStyleBackColor = true;
@@ -127,60 +126,6 @@
             this.notifyIcon.Visible = true;
             this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
             // 
-            // textBoxSavePath
-            // 
-            this.textBoxSavePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxSavePath.Location = new System.Drawing.Point(108, 46);
-            this.textBoxSavePath.Name = "textBoxSavePath";
-            this.textBoxSavePath.Size = new System.Drawing.Size(112, 22);
-            this.textBoxSavePath.TabIndex = 6;
-            this.textBoxSavePath.TextChanged += new System.EventHandler(this.textBoxSavePath_TextChanged);
-            // 
-            // labelSavePath
-            // 
-            this.labelSavePath.AutoSize = true;
-            this.labelSavePath.Location = new System.Drawing.Point(12, 49);
-            this.labelSavePath.Name = "labelSavePath";
-            this.labelSavePath.Size = new System.Drawing.Size(72, 17);
-            this.labelSavePath.TabIndex = 7;
-            this.labelSavePath.Text = "Save path";
-            // 
-            // buttonBrowse
-            // 
-            this.buttonBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBrowse.Location = new System.Drawing.Point(226, 46);
-            this.buttonBrowse.Name = "buttonBrowse";
-            this.buttonBrowse.Size = new System.Drawing.Size(71, 23);
-            this.buttonBrowse.TabIndex = 8;
-            this.buttonBrowse.Text = "Browse";
-            this.buttonBrowse.UseVisualStyleBackColor = true;
-            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
-            // 
-            // checkBoxAutoTest
-            // 
-            this.checkBoxAutoTest.AutoSize = true;
-            this.checkBoxAutoTest.Location = new System.Drawing.Point(15, 74);
-            this.checkBoxAutoTest.Name = "checkBoxAutoTest";
-            this.checkBoxAutoTest.Size = new System.Drawing.Size(231, 21);
-            this.checkBoxAutoTest.TabIndex = 9;
-            this.checkBoxAutoTest.Text = "Auto-test upon starting software";
-            this.checkBoxAutoTest.UseVisualStyleBackColor = true;
-            this.checkBoxAutoTest.CheckedChanged += new System.EventHandler(this.checkBoxAutoTest_CheckedChanged);
-            // 
-            // checkBoxAutoStart
-            // 
-            this.checkBoxAutoStart.AutoSize = true;
-            this.checkBoxAutoStart.Location = new System.Drawing.Point(15, 101);
-            this.checkBoxAutoStart.Name = "checkBoxAutoStart";
-            this.checkBoxAutoStart.Size = new System.Drawing.Size(176, 21);
-            this.checkBoxAutoStart.TabIndex = 10;
-            this.checkBoxAutoStart.Text = "Auto-start with windows";
-            this.checkBoxAutoStart.UseVisualStyleBackColor = true;
-            this.checkBoxAutoStart.CheckedChanged += new System.EventHandler(this.checkBoxAutoStart_CheckedChanged);
-            this.checkBoxAutoStart.Enabled = false;
-            this.checkBoxAutoStart.Visible = false;
-            // 
             // contextMenuStrip
             // 
             this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -193,22 +138,80 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // textBoxSavePath
+            // 
+            this.textBoxSavePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxSavePath.Location = new System.Drawing.Point(108, 58);
+            this.textBoxSavePath.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBoxSavePath.Name = "textBoxSavePath";
+            this.textBoxSavePath.Size = new System.Drawing.Size(112, 27);
+            this.textBoxSavePath.TabIndex = 6;
+            this.textBoxSavePath.TextChanged += new System.EventHandler(this.textBoxSavePath_TextChanged);
+            // 
+            // labelSavePath
+            // 
+            this.labelSavePath.AutoSize = true;
+            this.labelSavePath.Location = new System.Drawing.Point(12, 61);
+            this.labelSavePath.Name = "labelSavePath";
+            this.labelSavePath.Size = new System.Drawing.Size(74, 20);
+            this.labelSavePath.TabIndex = 7;
+            this.labelSavePath.Text = "Save path";
+            // 
+            // buttonBrowse
+            // 
+            this.buttonBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonBrowse.Location = new System.Drawing.Point(226, 58);
+            this.buttonBrowse.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.buttonBrowse.Name = "buttonBrowse";
+            this.buttonBrowse.Size = new System.Drawing.Size(71, 29);
+            this.buttonBrowse.TabIndex = 8;
+            this.buttonBrowse.Text = "Browse";
+            this.buttonBrowse.UseVisualStyleBackColor = true;
+            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
+            // 
+            // checkBoxAutoTest
+            // 
+            this.checkBoxAutoTest.AutoSize = true;
+            this.checkBoxAutoTest.Location = new System.Drawing.Point(15, 92);
+            this.checkBoxAutoTest.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.checkBoxAutoTest.Name = "checkBoxAutoTest";
+            this.checkBoxAutoTest.Size = new System.Drawing.Size(246, 24);
+            this.checkBoxAutoTest.TabIndex = 9;
+            this.checkBoxAutoTest.Text = "Auto-test upon starting software";
+            this.checkBoxAutoTest.UseVisualStyleBackColor = true;
+            this.checkBoxAutoTest.CheckedChanged += new System.EventHandler(this.checkBoxAutoTest_CheckedChanged);
+            // 
+            // checkBoxAutoStart
+            // 
+            this.checkBoxAutoStart.AutoSize = true;
+            //this.checkBoxAutoStart.Enabled = false;
+            this.checkBoxAutoStart.Location = new System.Drawing.Point(15, 126);
+            this.checkBoxAutoStart.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.checkBoxAutoStart.Name = "checkBoxAutoStart";
+            this.checkBoxAutoStart.Size = new System.Drawing.Size(192, 24);
+            this.checkBoxAutoStart.TabIndex = 10;
+            this.checkBoxAutoStart.Text = "Auto-start with windows";
+            this.checkBoxAutoStart.UseVisualStyleBackColor = true;
+            //this.checkBoxAutoStart.Visible = false;
+            this.checkBoxAutoStart.CheckedChanged += new System.EventHandler(this.checkBoxAutoStart_CheckedChanged);
+            // 
             // BBLTest
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(312, 233);
+            this.ClientSize = new System.Drawing.Size(312, 291);
             this.Controls.Add(this.checkBoxAutoStart);
             this.Controls.Add(this.checkBoxAutoTest);
             this.Controls.Add(this.buttonBrowse);
@@ -220,7 +223,8 @@
             this.Controls.Add(this.labelInterval);
             this.Controls.Add(this.numericUpDownInterval);
             this.Controls.Add(this.buttonRunTest);
-            this.MinimumSize = new System.Drawing.Size(330, 280);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MinimumSize = new System.Drawing.Size(330, 338);
             this.Name = "BBLTest";
             this.ShowInTaskbar = false;
             this.Text = "SpeedtestCore";

@@ -9,7 +9,7 @@
   <Identity
     Name="6faaf751-670f-4dce-9d71-23f6508c7c9f"
     Publisher="CN=Vinicius Zhu"
-    Version="1.0.1.0" />
+    Version="1.0.2.0" />
 
   <Properties>
     <DisplayName>SpeedtestCorePackaging</DisplayName>

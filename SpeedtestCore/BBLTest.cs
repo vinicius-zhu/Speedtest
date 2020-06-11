@@ -8,11 +8,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -71,9 +73,9 @@ namespace SpeedtestCore
             RunnerThread = new Thread(ThreadRun);
             TestTimerMonitor = new Thread(RestartTimer);
             TestTimer = new System.Windows.Forms.Timer();
-            
+            checkBoxAutoStart.Visible = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
-            EventArgs ea = new EventArgs();
+                EventArgs ea = new EventArgs();
             if (File.Exists(Path.Combine(Application.StartupPath, "settings.xml")))
             {
                 FileStream fs = new FileStream(Path.Combine(Application.StartupPath, "settings.xml"), FileMode.Open);
@@ -395,21 +397,26 @@ namespace SpeedtestCore
                 {
                     if (!File.Exists(path))
                     {
-                        /*
-                        WshShell shell = new WshShell();
-                        var windowsApplicationShortcut = (IWshShortcut)shell.CreateShortcut(path);
-                        windowsApplicationShortcut.Description = "SpeedtestCore from Brasil Banda Larga";
-                        windowsApplicationShortcut.WorkingDirectory = Application.StartupPath;
-                        windowsApplicationShortcut.TargetPath = Application.ExecutablePath;
-                        windowsApplicationShortcut.Save();
-                        */
+                        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                        {
+                            WshShell shell = new WshShell();
+                            var windowsApplicationShortcut = (IWshShortcut) shell.CreateShortcut(path);
+                            windowsApplicationShortcut.Description = "SpeedtestCore from Brasil Banda Larga";
+                            windowsApplicationShortcut.WorkingDirectory = Application.StartupPath;
+                            windowsApplicationShortcut.TargetPath = Application.ExecutablePath;
+                            windowsApplicationShortcut.Save();
+                        }
+
                     }
                 }
                 else
                 {
-                    if (File.Exists(path))
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                     {
-                        File.Delete(path);
+                        if (File.Exists(path))
+                        {
+                            File.Delete(path);
+                        }
                     }
                 }
             }
@@ -417,15 +424,19 @@ namespace SpeedtestCore
             {
                 try
                 {
-                    RegistryKey rk =  Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        RegistryKey rk =
+                            Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
-                    if (ControlSettings.AutoStart)
-                    {
-                        rk.SetValue(AppName, Application.ExecutablePath);
-                    }
-                    else
-                    {
-                        rk.DeleteValue(AppName, false);
+                        if (ControlSettings.AutoStart)
+                        {
+                            rk.SetValue(AppName, Application.ExecutablePath);
+                        }
+                        else
+                        {
+                            rk.DeleteValue(AppName, false);
+                        }
                     }
                 }
                 catch (Exception ex1)
