@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -19,6 +20,7 @@ using Microsoft.Win32;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using File = System.IO.File;
+using ThreadState = System.Threading.ThreadState;
 
 namespace SpeedtestCore
 {
@@ -124,105 +126,110 @@ namespace SpeedtestCore
         {
             Stopping = false;
             SeleniumChromeDriver = new ChromeDriver(SeleniumChromeService, SeleniumChromeOptions);
-
-            SeleniumChromeDriver.Url = "https://www.brasilbandalarga.com.br/bbl/";
-            IWebElement button = SeleniumChromeDriver.FindElementById("btnIniciar");
-            button.Click();
-            try
+            for (int count = 0; count < 3; count++)
             {
-                while (button.Text.ToUpper() != "INICIAR NOVO TESTE" && !Stopping)
+                SeleniumChromeDriver.Url = "https://www.brasilbandalarga.com.br/bbl/";
+                IWebElement button = SeleniumChromeDriver.FindElementById("btnIniciar");
+                button.Click();
+                try
                 {
-                    Thread.Sleep(1000);
-                }
-            }
-            catch
-            {
-                Stopping = true;
-            }
-
-            if (!Stopping)
-            {
-                IWebElement medicao = SeleniumChromeDriver.FindElementById("medicao");
-                List<IWebElement> textos = new List<IWebElement>(medicao.FindElements(By.ClassName("textao")));
-                String download = textos[0].Text;
-                String upload = textos[1].Text;
-
-                IWebElement stats = medicao.FindElement(By.ClassName("text-left"));
-
-                List<IWebElement> rows = new List<IWebElement>(stats.FindElements(By.ClassName("row")));
-                Dictionary<String, String> testdata = new Dictionary<string, string>();
-                foreach (IWebElement element in rows)
-                {
-                    if (!String.IsNullOrEmpty(element.Text))
+                    while (button.Text.ToUpper() != "INICIAR NOVO TESTE" && !Stopping)
                     {
-                        try
-                        {
-                            List<String> separated = new List<string>(element.Text.Split(new[] {"\r\n"},
-                                StringSplitOptions.RemoveEmptyEntries));
-                            if (separated.Count == 1)
-                            {
-                                separated.Add("-");
-                            }
-
-                            if (separated.Count == 2)
-                            {
-                                testdata.Add(separated[0].Trim(), separated[1].Trim());
-                            }
-                        }
-                        catch
-                        {
-                        }
+                        Thread.Sleep(1000);
                     }
                 }
-
-                List<IWebElement> topstats = new List<IWebElement>(medicao.FindElements(By.ClassName("text-center")));
-                String provider = topstats[0].Text.Trim();
-                String timestamp = topstats[1].Text.Trim();
-
-                Screenshot ss = SeleniumChromeDriver.GetScreenshot();
-
-                StreamWriter sw;
-                String logfilepath = Path.Combine(ControlSettings.SaveFolder, "log.csv");
-                String excelfilepath = Path.Combine(ControlSettings.SaveFolder, "Status.xlsm");
-
-                if (File.Exists(logfilepath))
+                catch
                 {
-                    sw = new StreamWriter(logfilepath, true, Encoding.UTF8);
-                }
-                else
-                {
-                    sw = new StreamWriter(logfilepath, false, Encoding.UTF8);
-                    sw.WriteLine(
-                        "Timespan;Date;Time;Download;Upload;Latencia;Jitter;Perda;IP;Região Servidor;Região Teste;Operador");
+                    Stopping = true;
                 }
 
-                if (!File.Exists(excelfilepath))
+                if (!Stopping)
                 {
-                    File.WriteAllBytes(excelfilepath, GetTextAssembly("Status.xlsm"));
-                }
+                    IWebElement medicao = SeleniumChromeDriver.FindElementById("medicao");
+                    List<IWebElement> textos = new List<IWebElement>(medicao.FindElements(By.ClassName("textao")));
+                    String download = textos[0].Text;
+                    String upload = textos[1].Text;
 
-                DateTime today = DateTime.Parse(timestamp);
-                TimeSpan now = today.TimeOfDay;
-                String date = today.Year.ToString("D4") + "-" + today.Month.ToString("D2") + "-" +
-                              today.Day.ToString("D2");
-                String time = now.Hours.ToString("D2") + ":" + now.Minutes.ToString("D2");
-                sw.WriteLine(date + " " + time + ";" +
-                             date + ";" +
-                             time + ";" +
-                             download + ";" +
-                             upload + ";" +
-                             testdata["Latência"] + ";" +
-                             testdata["Jitter"] + ";" +
-                             testdata["Perda"] + ";" +
-                             testdata["IP"] + ";" +
-                             testdata["Região Servidor"] + ";" +
-                             testdata["Região Teste"] + ";" +
-                             provider
-                );
-                ss.SaveAsFile(Path.Combine(ControlSettings.SaveFolder,date.Replace("-", "") + time.Replace(":", "") + ".jpg"));
-                sw.Close();
-                File.SetAttributes(logfilepath, File.GetAttributes(logfilepath) | FileAttributes.Hidden);
+                    IWebElement stats = medicao.FindElement(By.ClassName("text-left"));
+
+                    List<IWebElement> rows = new List<IWebElement>(stats.FindElements(By.ClassName("row")));
+                    Dictionary<String, String> testdata = new Dictionary<string, string>();
+                    foreach (IWebElement element in rows)
+                    {
+                        if (!String.IsNullOrEmpty(element.Text))
+                        {
+                            try
+                            {
+                                List<String> separated = new List<string>(element.Text.Split(new[] {"\r\n"},
+                                    StringSplitOptions.RemoveEmptyEntries));
+                                if (separated.Count == 1)
+                                {
+                                    separated.Add("-");
+                                }
+
+                                if (separated.Count == 2)
+                                {
+                                    testdata.Add(separated[0].Trim(), separated[1].Trim());
+                                }
+                            }
+                            catch
+                            {
+                            }
+                        }
+                    }
+
+                    List<IWebElement> topstats =
+                        new List<IWebElement>(medicao.FindElements(By.ClassName("text-center")));
+                    String provider = topstats[0].Text.Trim();
+                    String timestamp = topstats[1].Text.Trim();
+
+                    Screenshot ss = SeleniumChromeDriver.GetScreenshot();
+
+                    StreamWriter sw;
+                    String logfilepath = Path.Combine(ControlSettings.SaveFolder, "log.csv");
+                    String excelfilepath = Path.Combine(ControlSettings.SaveFolder, "Status.xlsm");
+
+                    if (File.Exists(logfilepath))
+                    {
+                        sw = new StreamWriter(logfilepath, true, Encoding.UTF8);
+                    }
+                    else
+                    {
+                        sw = new StreamWriter(logfilepath, false, Encoding.UTF8);
+                        sw.WriteLine(
+                            "Timespan;Date;Time;Download;Upload;Latencia;Jitter;Perda;IP;Região Servidor;Região Teste;Operador");
+                    }
+
+                    if (!File.Exists(excelfilepath))
+                    {
+                        File.WriteAllBytes(excelfilepath, GetTextAssembly("Status.xlsm"));
+                    }
+
+                    DateTime today = DateTime.Parse(timestamp);
+                    TimeSpan now = today.TimeOfDay;
+                    String date = today.Year.ToString("D4") + "-" + today.Month.ToString("D2") + "-" +
+                                  today.Day.ToString("D2");
+                    String time = now.Hours.ToString("D2") + ":" + now.Minutes.ToString("D2");
+                    sw.WriteLine(date + " " + time + ";" +
+                                 date + ";" +
+                                 time + ";" +
+                                 download + ";" +
+                                 upload + ";" +
+                                 testdata["Latência"] + ";" +
+                                 testdata["Jitter"] + ";" +
+                                 testdata["Perda"] + ";" +
+                                 testdata["IP"] + ";" +
+                                 testdata["Região Servidor"] + ";" +
+                                 testdata["Região Teste"] + ";" +
+                                 provider
+                    );
+                    ss.SaveAsFile(Path.Combine(ControlSettings.SaveFolder,
+                        date.Replace("-", "") + time.Replace(":", "") + ".jpg"));
+                    sw.Close();
+                    File.SetAttributes(logfilepath, File.GetAttributes(logfilepath) | FileAttributes.Hidden);
+                }
             }
+
             SeleniumChromeDriver.Quit();
         }
 
@@ -403,7 +410,8 @@ namespace SpeedtestCore
                             var windowsApplicationShortcut = (IWshShortcut) shell.CreateShortcut(path);
                             windowsApplicationShortcut.Description = "SpeedtestCore from Brasil Banda Larga";
                             windowsApplicationShortcut.WorkingDirectory = Application.StartupPath;
-                            windowsApplicationShortcut.TargetPath = Application.ExecutablePath;
+                            windowsApplicationShortcut.TargetPath = Path.Combine(Application.StartupPath, Application.ProductName) + ".exe";
+                            
                             windowsApplicationShortcut.Save();
                         }
 
@@ -468,6 +476,24 @@ namespace SpeedtestCore
         {
             buttonStop_Click(sender, e);
             Close();
+        }
+
+        private void folderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(ControlSettings.SaveFolder))
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    Arguments = ControlSettings.SaveFolder,
+                    FileName = "explorer.exe"
+                };
+
+                Process.Start(startInfo);
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Directory not configured!"));
+            }
         }
     }
 }

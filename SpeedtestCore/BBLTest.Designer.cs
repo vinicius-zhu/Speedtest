@@ -37,6 +37,7 @@
             this.buttonStop = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.folderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxSavePath = new System.Windows.Forms.TextBox();
@@ -130,22 +131,30 @@
             // 
             this.contextMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.folderToolStripMenuItem,
             this.openToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(115, 52);
+            this.contextMenuStrip.Size = new System.Drawing.Size(161, 76);
+            // 
+            // folderToolStripMenuItem
+            // 
+            this.folderToolStripMenuItem.Name = "folderToolStripMenuItem";
+            this.folderToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
+            this.folderToolStripMenuItem.Text = "Open &Folder";
+            this.folderToolStripMenuItem.Click += new System.EventHandler(this.folderToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -196,7 +205,6 @@
             // checkBoxAutoStart
             // 
             this.checkBoxAutoStart.AutoSize = true;
-            //this.checkBoxAutoStart.Enabled = false;
             this.checkBoxAutoStart.Location = new System.Drawing.Point(15, 126);
             this.checkBoxAutoStart.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.checkBoxAutoStart.Name = "checkBoxAutoStart";
@@ -204,7 +212,6 @@
             this.checkBoxAutoStart.TabIndex = 10;
             this.checkBoxAutoStart.Text = "Auto-start with windows";
             this.checkBoxAutoStart.UseVisualStyleBackColor = true;
-            //this.checkBoxAutoStart.Visible = false;
             this.checkBoxAutoStart.CheckedChanged += new System.EventHandler(this.checkBoxAutoStart_CheckedChanged);
             // 
             // BBLTest
@@ -255,6 +262,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem folderToolStripMenuItem;
     }
 }
 
